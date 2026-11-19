@@ -1,0 +1,16 @@
+{
+  "splits": {
+    "train": {"rows": 41886, "first_target_date": "2008-02-01", "last_target_date": "2022-12-01"},
+    "validation": {"rows": 5616, "first_target_date": "2023-01-01", "last_target_date": "2024-12-01"},
+    "test": {"rows": 4680, "first_target_date": "2025-01-01", "last_target_date": "2026-08-01"}
+  },
+  "validation": {
+    "persistence": {"MAE": 1.5558, "RMSE": 2.5873},
+    "ridge": {"MAE": 1.7362, "RMSE": 2.5896},
+    "random_forest": {"MAE": 2.784, "RMSE": 3.9042},
+    "hist_gradient_boosting": {"MAE": 3.2021, "RMSE": 4.0426}
+  },
+  "test": {"persistence": {"MAE": 1.5347, "RMSE": 2.3291}},
+  "selected_model": "persistence",
+  "target": "next-month c_maize_fao (estimated series)"
+}
