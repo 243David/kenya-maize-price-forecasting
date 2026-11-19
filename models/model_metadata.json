@@ -1,0 +1,6 @@
+{
+  "selected_model": "persistence",
+  "prediction_rule": "next_price = current_price",
+  "features": ["current_price","lag_1","lag_2","lag_3","lag_6","lag_12","rolling_3","rolling_6","rolling_12","month","year","market"],
+  "training_target": "next-month c_maize_fao"
+}
