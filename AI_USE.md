@@ -1,9 +1,11 @@
-# AI assistance disclosure
+# AI Use Disclosure
 
-This academic project uses ChatGPT as a development assistant for planning, documentation, exploratory code, and potentially model implementation and debugging.
+This project is being undertaken as part of the DSA 8401 Applied Machine Learning course at Strathmore University. I am responsible for developing the project, conducting the analysis, implementing the machine learning models, interpreting the results, and presenting the final work.
 
-At repository initialization, ChatGPT helped interpret the DSA 8401 requirements, select and inspect the World Bank Kenya food-price dataset, draft the proposal, write this documentation, and create the first data-audit script.
+I use ChatGPT as a supplementary learning and technical support tool when I need clarification or assistance with specific challenges. Its role includes helping me understand machine learning concepts, suggesting possible approaches, explaining programming errors, reviewing code, and improving the clarity of my documentation.
 
-All generated code, numerical results, figures, modelling decisions, and written conclusions must be reviewed, executed, and understood by the student before submission. Future AI contributions should be added to this file as the project progresses. No model evaluation or deployment has yet been verified.
+During the initial setup, ChatGPT assisted with understanding the project requirements, exploring suitable datasets, preparing the proposal, and creating the initial GitHub documentation and data-audit script.
 
-The student is responsible for the accuracy, originality, reproducibility, and academic integrity of the final submission, subject to the course AI-use policy.
+As the project progresses, I intend to carry out the practical implementation myself, using AI assistance when necessary to understand problems, troubleshoot errors, or consider alternative solutions. I will document any substantial additional AI contributions.
+
+I remain responsible for understanding the methods used, verifying the results, making the final decisions, and ensuring that the submitted work accurately reflects my learning and understanding of applied machine learning.
