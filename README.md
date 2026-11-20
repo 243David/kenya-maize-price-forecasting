@@ -43,7 +43,16 @@ uvicorn api.main:app --reload
 
 Open `http://localhost:8000/docs` to try the API. Alternatively run `docker compose up --build`.
 
+## Live deployment
+
+- **API documentation:** https://kenya-maize-price-forecasting.onrender.com/docs
+- **Health check:** https://kenya-maize-price-forecasting.onrender.com/health
+- **Prediction endpoint:** `POST https://kenya-maize-price-forecasting.onrender.com/predict`
+- **Hosting:** Render Docker Web Service (free instance; cold starts after inactivity).
+- **Verified 20 November 2026:** Render reported deployment **Live**; `/health` returned HTTP 200. Swagger UI `POST /predict` returned HTTP 200 and `predicted_price: 60` for an illustrative Nairobi request with `current_price: 60`. An otherwise identical request with `current_price: -60` returned HTTP 422 with validation message `Input should be greater than 0`.
+- The deployed service uses the selected persistence rule from `models/model_metadata.json` because the serialized joblib artifact is not in the public GitHub repository. A fresh full-pipeline reproduction still requires downloading the raw data and running the training scripts.
+
 ## Important limitations
-The estimated historical price series may have been revised using future information; chronological evaluation alone cannot remove that upstream hindsight risk. These results do not establish real-time accuracy on independently observed market prices. The API is a local demonstration, not a live hosted service.
+The estimated historical price series may have been revised using future information; chronological evaluation alone cannot remove that upstream hindsight risk. These results do not establish real-time accuracy on independently observed market prices. The API is deployed on Render as a live demonstration service. This is not evidence of real-time forecasting accuracy.
 
 See `reports/final_report.md`, `reports/metrics.json` and `AI_USE.md` for the report, detailed metrics and AI disclosure.
