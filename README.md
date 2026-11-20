@@ -3,56 +3,105 @@
 **DSA 8401 Applied Machine Learning | Strathmore University**  
 **Student:** RUHANAMIRINDI BULINDI David | **Student number:** 224688
 
-## Overview
-A reproducible one-month-ahead forecasting study using the World Bank Kenya monthly market food-price estimates, 2007–2026. The target is next month's `c_maize_fao`, a **model-estimated price series**, not a directly observed transaction price. The CSV has 55,224 rows and 234 markets; only 2,997 entries in the directly observed `maize_fao` field are populated.
+## What the project does
 
-## Results
-Validation uses 2023–2024, with training through 2022 and a held-out test set from January 2025 to August 2026.
+This is a reproducible, one-month-ahead forecasting system for **World Bank model-estimated maize prices** across 234 Kenyan markets. The project tests whether historical-price regression models can beat a straightforward persistence forecast (next month's price equals this month's price). The experiment uses a strict chronological split, so no test-period observations enter model selection.
 
-| Model | Validation MAE | Validation RMSE |
-|---|---:|---:|
-| Persistence | **1.5558** | **2.5873** |
-| Ridge regression | 1.7362 | 2.5896 |
-| Random Forest | 2.7840 | 3.9042 |
-| Histogram Gradient Boosting | 3.2021 | 4.0426 |
+**Important finding:** On the validation period, persistence had the lowest MAE and was selected. The system serves this baseline rather than pretending a more complex ML model performed better. The trained Ridge, Random Forest and histogram gradient-boosting approaches remain in the reproducible training script.
 
-The lowest-validation-MAE model was persistence (next month's price = current price). Its untouched test MAE was **1.5347** and RMSE **2.3291**, based on 4,680 market-month predictions. More complex methods did not improve on the baseline in this experiment.
+## Data and important caveat
+
+The source is the World Bank's Kenya *Monthly Food Price Estimates by Product and Market*, 2007–2026, distributed as `KEN_RTFP_mkt_2007_2026-08-24.csv`. The original ZIP is available at the World Bank source; place the extracted CSV under `data/raw/`.
+
+There are **55,224 market-month records**, **234 markets**, **2,997 non-missing directly observed maize prices** (`maize_fao`) and **55,224 model-estimated maize-price entries** (`c_maize_fao`). Our prediction target is **next month's `c_maize_fao`**, not a directly observed market transaction. The dataset's historical estimates may have been retrospectively revised and may contain information not available in real time. Therefore, scores measure predictability of this published historical estimated series and should **not** be interpreted as demonstrated live forecasting performance.
 
 ## Architecture
-```
-Raw CSV -> data audit -> market-level lags and rolling features
-        -> chronological train / validation / test
-        -> compare persistence, Ridge, Random Forest, Gradient Boosting
-        -> select by validation MAE -> saved artifact -> FastAPI -> Docker
+
+```text
+World Bank raw CSV
+       |
+       v
+Data audit + exploratory charts
+       |
+       v
+Market-level lag / rolling features (only current and earlier prices)
+       |
+       v
+Chronological train (2008–2022) / validation (2023–2024) / test (2025–2026)
+       |
+       v
+Persistence vs Ridge vs Random Forest vs Histogram Gradient Boosting
+       |
+       v
+Select lowest validation MAE; refit selected ML model if applicable
+       |
+       v
+Saved artifact + test metrics -> FastAPI /predict -> Docker
 ```
 
-## Reproduce
-Use Python 3.11+. Obtain `KEN_RTFP_mkt_2007_2026-08-24.csv` from the World Bank dataset and place it under `data/raw/`.
+## Setup and reproduce
+
+Requires Python 3.11 or newer.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+mkdir -p data/raw
+# Extract KEN_RTFP_mkt_2007_2026-08-24.csv into data/raw/
 python -m src.data_audit
 python -m src.eda
 python -m src.pipeline
-pip install pytest httpx
 python -m pytest -q
 uvicorn api.main:app --reload
 ```
 
-Open `http://localhost:8000/docs` to try the API. Alternatively run `docker compose up --build`.
+To run the tests, also install `pytest` and `httpx`: `pip install pytest httpx`.
 
-## Live deployment
+API docs: `http://localhost:8000/docs`; health: `http://localhost:8000/health`.
 
-- **API documentation:** https://kenya-maize-price-forecasting.onrender.com/docs
-- **Health check:** https://kenya-maize-price-forecasting.onrender.com/health
-- **Prediction endpoint:** `POST https://kenya-maize-price-forecasting.onrender.com/predict`
-- **Hosting:** Render Docker Web Service (free instance; cold starts after inactivity).
-- **Verified 20 November 2026:** Render reported deployment **Live**; `/health` returned HTTP 200. Swagger UI `POST /predict` returned HTTP 200 and `predicted_price: 60` for an illustrative Nairobi request with `current_price: 60`. An otherwise identical request with `current_price: -60` returned HTTP 422 with validation message `Input should be greater than 0`.
-- The deployed service uses the selected persistence rule from `models/model_metadata.json` because the serialized joblib artifact is not in the public GitHub repository. A fresh full-pipeline reproduction still requires downloading the raw data and running the training scripts.
+Docker (after cloning):
 
-## Important limitations
-The estimated historical price series may have been revised using future information; chronological evaluation alone cannot remove that upstream hindsight risk. These results do not establish real-time accuracy on independently observed market prices. The API is deployed on Render as a live demonstration service. This is not evidence of real-time forecasting accuracy.
+```bash
+docker compose up --build
+```
 
-See `reports/final_report.md`, `reports/metrics.json` and `AI_USE.md` for the report, detailed metrics and AI disclosure.
+### Example API request
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H 'Content-Type: application/json' \
+  -d '{"market":"Adele Center","forecast_year":2026,"forecast_month":9,"current_price":60,"lag_1":59,"lag_2":58,"lag_3":57,"lag_6":54,"lag_12":48,"rolling_3":59,"rolling_6":57.5,"rolling_12":54}'
+```
+
+This returns `predicted_price: 60.0` under the selected persistence model. **These request values are illustrative, not real September 2026 observations.**
+
+## Experiment results
+
+| Model | Validation MAE | Validation RMSE |
+|---|---:|---:|
+| Persistence | **1.5558** | **2.5873** |
+| Ridge | 1.7362 | 2.5896 |
+| Random Forest | 2.7840 | 3.9042 |
+| Histogram Gradient Boosting | 3.2021 | 4.0426 |
+
+**Held-out test (2025-01 to 2026-08):** selected persistence model MAE **1.5347**, RMSE **2.3291**, over 4,680 market-month forecasts. Scores are in the source dataset's price units. These are results from the current one-split experiment, not uncertainty bounds.
+
+## Project files
+
+- `src/data_audit.py`: data-quality audit
+- `src/eda.py`: three exploratory plots and a market summary
+- `src/pipeline.py`: features, chronological split, model comparison, selection and test predictions
+- `api/main.py`: FastAPI service with input validation
+- `models/model_metadata.json`: deployable selected-baseline model definition
+- `reports/metrics.json`: validation/test metrics
+- `reports/final_report.md`: full interpretation, decisions and limitations
+- `Dockerfile`, `docker-compose.yml`: container deployment
+- `tests/`: automated checks
+- `AI_USE.md`: AI assistance disclosure
+
+Raw source data are omitted from the public repository to avoid duplicating the external dataset; the downloadable project bundle provided separately includes them for reproduction. The compact selected-model metadata is versioned; a full `joblib` artifact is regenerated by the training script. Never load untrusted joblib files.
+
+## Limitations
+
+A static, retrospectively estimated series is not the same as real-time market quotes. One holdout split does not demonstrate robustness across economic regimes. Market identifiers, feature histories and price units must be checked carefully before operational use. The API is a **local demonstration service**, not a continuously hosted public endpoint.

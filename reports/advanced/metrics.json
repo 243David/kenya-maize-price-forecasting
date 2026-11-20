@@ -1,0 +1,141 @@
+{
+  "source_warning": "Target c_maize_fao is a model-estimated series; estimated targets may incorporate hindsight information.",
+  "horizons": {
+    "1": {
+      "train_rows": 41886,
+      "validation_rows": 5616,
+      "test_rows": 4680,
+      "selected_model": "persistence",
+      "validation": {
+        "persistence": {
+          "mae": 1.5558,
+          "rmse": 2.5873
+        },
+        "ridge": {
+          "mae": 1.7079,
+          "rmse": 2.5557
+        },
+        "hist_gradient_boosting": {
+          "mae": 1.7755,
+          "rmse": 2.635
+        },
+        "lightgbm": {
+          "mae": 1.7398,
+          "rmse": 2.5921
+        }
+      },
+      "test": {
+        "mae": 1.5347,
+        "rmse": 2.3291
+      },
+      "test_persistence": {
+        "mae": 1.5347,
+        "rmse": 2.3291
+      },
+      "interval_nominal_coverage": 0.8,
+      "interval_empirical_coverage": 0.7921,
+      "interval_half_width": 2.24,
+      "observed_survey_origin_rows_test": 80,
+      "mae_difference_vs_persistence_month_bootstrap_95ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "2": {
+      "train_rows": 41652,
+      "validation_rows": 5616,
+      "test_rows": 4680,
+      "selected_model": "persistence",
+      "validation": {
+        "persistence": {
+          "mae": 2.3085,
+          "rmse": 3.8954
+        },
+        "ridge": {
+          "mae": 2.7836,
+          "rmse": 3.9703
+        },
+        "hist_gradient_boosting": {
+          "mae": 2.4366,
+          "rmse": 3.5953
+        },
+        "lightgbm": {
+          "mae": 2.3995,
+          "rmse": 3.6219
+        }
+      },
+      "test": {
+        "mae": 2.0446,
+        "rmse": 3.0071
+      },
+      "test_persistence": {
+        "mae": 2.0446,
+        "rmse": 3.0071
+      },
+      "interval_nominal_coverage": 0.8,
+      "interval_empirical_coverage": 0.8139,
+      "interval_half_width": 3.2,
+      "observed_survey_origin_rows_test": 80,
+      "mae_difference_vs_persistence_month_bootstrap_95ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "3": {
+      "train_rows": 41418,
+      "validation_rows": 5616,
+      "test_rows": 4680,
+      "selected_model": "persistence",
+      "validation": {
+        "persistence": {
+          "mae": 3.042,
+          "rmse": 4.9742
+        },
+        "ridge": {
+          "mae": 4.1526,
+          "rmse": 5.5743
+        },
+        "hist_gradient_boosting": {
+          "mae": 3.7162,
+          "rmse": 5.2994
+        },
+        "lightgbm": {
+          "mae": 3.2425,
+          "rmse": 4.7386
+        }
+      },
+      "test": {
+        "mae": 2.462,
+        "rmse": 3.4773
+      },
+      "test_persistence": {
+        "mae": 2.462,
+        "rmse": 3.4773
+      },
+      "interval_nominal_coverage": 0.8,
+      "interval_empirical_coverage": 0.8455,
+      "interval_half_width": 4.3,
+      "observed_survey_origin_rows_test": 80,
+      "mae_difference_vs_persistence_month_bootstrap_95ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "features": [
+    "price",
+    "lag1",
+    "lag3",
+    "lag6",
+    "lag12",
+    "ma3",
+    "ma6",
+    "ma12",
+    "ret1",
+    "ret3",
+    "ret12",
+    "vol6",
+    "month_sin",
+    "month_cos"
+  ]
+}

@@ -2,6 +2,6 @@ from fastapi.testclient import TestClient
 from api.main import app
 
 def test_health_endpoint():
-    response=TestClient(app).get("/health")
+    response=TestClient(app).get('/health')
     assert response.status_code==200
-    assert "model_available" in response.json()
+    assert 'model_available' in response.json()
