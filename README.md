@@ -3,6 +3,45 @@
 **DSA 8401 Applied Machine Learning | Strathmore University**  
 **Student:** RUHANAMIRINDI BULINDI David | **Student number:** 224688
 
+## Live Application — Advanced V2
+
+The Kenya Maize Price Forecasting project has been extended into an interactive forecasting and model-evaluation system, deployed online for demonstration and academic assessment.
+
+### Access the application
+
+**[Open the Interactive Forecasting Dashboard](https://kenya-maize-dashboard.onrender.com)**
+
+**[Open the Advanced V2 Forecasting API](https://kenya-maize-price-forecasting.onrender.com/docs)**
+
+The dashboard allows users to explore maize price forecasts and evaluate the performance of the selected forecasting model.
+
+### Advanced V2 features
+
+- **Multi-horizon forecasting:** Generate maize price forecasts for 1, 2, and 3 months ahead.
+- **Interactive dashboard:** Configure forecast inputs, visualize results, and download forecast data as CSV.
+- **Prediction intervals:** Display empirical 80% prediction intervals to communicate forecasting uncertainty.
+- **Model evaluation:** Compare Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and prediction interval coverage across forecasting horizons.
+- **Machine learning experiments:** Evaluate persistence against regression-based alternatives, including Ridge, histogram gradient boosting, and LightGBM.
+- **Explainability:** Include SHAP-based analysis within the advanced research workflow.
+- **Drift monitoring:** Provide offline monitoring capabilities to investigate changes in data distributions and forecasting performance.
+- **REST API:** Access forecasting functionality through FastAPI endpoints for health checks, model information, and predictions.
+
+### Production model
+
+The persistence model was selected for all three forecasting horizons based on the evaluation results.
+
+| Forecast horizon | Test MAE | Test RMSE | Empirical 80% coverage |
+|---|---:|---:|---:|
+| 1 month | 1.5347 | 2.3291 | 79.21% |
+| 2 months | 2.0446 | 3.0071 | 81.39% |
+| 3 months | 2.4620 | 3.4773 | 84.55% |
+
+Although more complex machine learning methods were investigated, persistence remained the selected production model. This demonstrates the importance of evaluating models against a strong baseline rather than assuming that greater complexity guarantees better forecasting accuracy.
+
+**Research limitation:** The forecasting target is the World Bank's model-estimated maize price series (`c_maize_fao`), rather than directly observed market transaction prices. Historical estimates may incorporate hindsight information. The reported performance should therefore not be interpreted as validated real-time market forecasting accuracy.
+
+*Note: The free hosted applications may take approximately one minute to respond after a period of inactivity.*
+
 ## What the project does
 
 This is a reproducible, one-month-ahead forecasting system for **World Bank model-estimated maize prices** across 234 Kenyan markets. The project tests whether historical-price regression models can beat a straightforward persistence forecast (next month's price equals this month's price). The experiment uses a strict chronological split, so no test-period observations enter model selection.
@@ -104,4 +143,4 @@ Raw source data are omitted from the public repository to avoid duplicating the 
 
 ## Limitations
 
-A static, retrospectively estimated series is not the same as real-time market quotes. One holdout split does not demonstrate robustness across economic regimes. Market identifiers, feature histories and price units must be checked carefully before operational use. The API is a **local demonstration service**, not a continuously hosted public endpoint.
+A static, retrospectively estimated series is not the same as real-time market quotes. One holdout split does not demonstrate robustness across economic regimes. Market identifiers, feature histories and price units must be checked carefully before operational use. The Advanced V2 API and interactive dashboard are publicly deployed as academic demonstration services. Availability depends on the hosting platform, and the system is not intended for operational trading or commercial price decisions.
