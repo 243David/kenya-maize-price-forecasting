@@ -1,0 +1,27 @@
+{
+  "reference_period": "2023-01 through 2024-12",
+  "monitor_period": "2025-01 onward",
+  "reference_rows": 5616,
+  "monitor_rows": 4680,
+  "method": "Population Stability Index (PSI), reference-decile bins",
+  "thresholds": {
+    "moderate": 0.1,
+    "high": 0.25
+  },
+  "limitations": [
+    "PSI measures distribution shift, not predictive performance or causality.",
+    "Reference and monitoring periods may differ in market coverage.",
+    "The estimated maize-price series may reflect upstream estimation changes.",
+    "Thresholds are heuristic; alerting requires operational validation."
+  ],
+  "high_features": [
+    "ret12",
+    "lag12"
+  ],
+  "moderate_features": [
+    "vol6",
+    "ret3",
+    "ma12"
+  ],
+  "feature_count": 14
+}

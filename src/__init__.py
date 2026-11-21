@@ -1,1 +1,1 @@
-"""Kenya maize price forecasting source package."""
+"""Forecast pipeline package."""

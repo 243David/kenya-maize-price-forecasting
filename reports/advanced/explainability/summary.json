@@ -1,0 +1,81 @@
+{
+  "scope": "LightGBM experimental candidate; selected production baseline is persistence",
+  "interpretation": "SHAP values explain LightGBM predictions of log future/current estimated price ratios, not price levels, causal effects, or observed ground truth.",
+  "horizons": {
+    "1": {
+      "sample_rows": 300,
+      "top_features": [
+        {
+          "feature": "lag6",
+          "mean_absolute_shap_log_change": 0.004646336239334932
+        },
+        {
+          "feature": "month_cos",
+          "mean_absolute_shap_log_change": 0.004465446921527434
+        },
+        {
+          "feature": "ma6",
+          "mean_absolute_shap_log_change": 0.004141666301116982
+        },
+        {
+          "feature": "month_sin",
+          "mean_absolute_shap_log_change": 0.003673594612650066
+        },
+        {
+          "feature": "ret12",
+          "mean_absolute_shap_log_change": 0.003206400871706666
+        }
+      ]
+    },
+    "2": {
+      "sample_rows": 300,
+      "top_features": [
+        {
+          "feature": "ma6",
+          "mean_absolute_shap_log_change": 0.01930303267466335
+        },
+        {
+          "feature": "month_sin",
+          "mean_absolute_shap_log_change": 0.01050760019050212
+        },
+        {
+          "feature": "month_cos",
+          "mean_absolute_shap_log_change": 0.006896674448564114
+        },
+        {
+          "feature": "ret12",
+          "mean_absolute_shap_log_change": 0.004959652592109378
+        },
+        {
+          "feature": "price",
+          "mean_absolute_shap_log_change": 0.004938320259734683
+        }
+      ]
+    },
+    "3": {
+      "sample_rows": 300,
+      "top_features": [
+        {
+          "feature": "month_sin",
+          "mean_absolute_shap_log_change": 0.01887529503414647
+        },
+        {
+          "feature": "ma6",
+          "mean_absolute_shap_log_change": 0.017109034794816153
+        },
+        {
+          "feature": "lag3",
+          "mean_absolute_shap_log_change": 0.010376348637774117
+        },
+        {
+          "feature": "ret12",
+          "mean_absolute_shap_log_change": 0.007272652506303331
+        },
+        {
+          "feature": "price",
+          "mean_absolute_shap_log_change": 0.005072184770207966
+        }
+      ]
+    }
+  }
+}

@@ -1,11 +1,7 @@
 # AI Use Disclosure
 
-This project is being undertaken as part of the DSA 8401 Applied Machine Learning course at Strathmore University. I am responsible for developing the project, conducting the analysis, implementing the machine learning models, interpreting the results, and presenting the final work.
+This is an individual DSA 8401 capstone submitted by RUHANAMIRINDI BULINDI David. ChatGPT has been used as a technical and writing assistant throughout the preparation of the project.
 
-I use ChatGPT as a supplementary learning and technical support tool when I need clarification or assistance with specific challenges. Its role includes helping me understand machine learning concepts, suggesting possible approaches, explaining programming errors, reviewing code, and improving the clarity of my documentation.
+The assistance has included discussing the problem and dataset, preparing the proposal, explaining methodological choices, drafting and generating substantial portions of the data-audit, exploratory analysis, feature-engineering, training, evaluation, testing and API code, creating initial GitHub commits, and drafting project documentation and the report. The assistant also executed an initial training and testing run and helped interpret its outputs.
 
-During the initial setup, ChatGPT assisted with understanding the project requirements, exploring suitable datasets, preparing the proposal, and creating the initial GitHub documentation and data-audit script.
-
-As the project progresses, I intend to carry out the practical implementation myself, using AI assistance when necessary to understand problems, troubleshoot errors, or consider alternative solutions. I will document any substantial additional AI contributions.
-
-I remain responsible for understanding the methods used, verifying the results, making the final decisions, and ensuring that the submitted work accurately reflects my learning and understanding of applied machine learning.
+The student remains responsible for understanding the methods, checking the code and reported results, deciding what to submit, and defending the project. The student may modify or independently reproduce the implementation before submission. This disclosure is intended to describe actual AI contributions rather than imply that assistance was limited to minor proofreading.
